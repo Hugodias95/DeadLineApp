@@ -57,8 +57,8 @@ public class ProjectController {
                 + "name = ?,"
                 + "description = ?,"
                 + "createdAt = ?,"
-                + "updateAt = ?"
-                + "WWHERE id = ?";
+                + "updatedAt = ?"
+                + "WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -75,7 +75,7 @@ public class ProjectController {
             statement.execute();
 
         } catch (SQLException erro) {
-            throw new RuntimeException("Erro ao atualizar o projeto " + erro.getMessage() + erro);
+            throw new RuntimeException("Erro ao atualizar o projeto "  + erro);
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
         }

@@ -66,8 +66,8 @@ public class TaskController {
                 + "completed = ?,"
                 + "deadline = ?,"
                 + "createdAt = ?,"
-                + "updateAt = ?"
-                + "WWHERE id = ?";
+                + "updatedAt = ?"
+                + "WHERE id = ?";
 
         Connection connection = null;
         PreparedStatement statement = null;
@@ -88,7 +88,7 @@ public class TaskController {
             statement.execute();
 
         } catch (Exception erro) {
-            throw new RuntimeException("Erro ao atualizar tarefa " + erro.getMessage() + erro);
+            throw new RuntimeException("Erro ao atualizar tarefa " + erro);
         } finally {
             ConnectionFactory.closeConnection(connection, statement);
         }

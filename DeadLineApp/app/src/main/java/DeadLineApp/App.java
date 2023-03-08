@@ -4,9 +4,11 @@
 package DeadLineApp;
 
 import controller.ProjectController;
+import controller.TaskController;
 import java.util.Date;
 import java.util.List;
 import model.Project;
+import model.Task;
 
 public class App {
 //    public String getGreeting() {
@@ -14,19 +16,46 @@ public class App {
 //    }
 
     public static void main(String[] args) {
-       
-        ProjectController projectController = new ProjectController();
-        
-        Project project = new Project();
-        project.setName("Projeto teste");
-        project.setDescription("descrição teste");
-        projectController.save(project);
-        
-//        project.setName("Nome Atualizado");
+
+//        ProjectController projectController = new ProjectController();
+//        
+//        Project project = new Project();
+//        project.setName("Projeto teste");
+//        project.setDescription("descrição teste");
+//        projectController.save(project);
+//        ProjectController projectController = new ProjectController();
+//        Project project = new Project();
+//        
+//        project.setName("Novo nome");
+//        project.setDescription("descrição teste");
+//        project.setId(1);
+//        
+//        
 //        projectController.update(project);
-//        
+//
 //        List<Project> projects = projectController.getAll();
-//        System.out.println("Total de projetos = " + projects.size());
+//        System.out.println("Total de projetos = " + projects);
 //        
+//        projectController.removeById(1);
+//        System.out.println("Total de projetos = " + projects);
+
+            //TASKS TESTE
+
+//          TaskController taskController = new TaskController();
+//          
+//          Task task = new Task();
+//          task.setIdProject(2);
+//          task.setId(1);
+//          task.setName("Criar as tabelas da aplicação teste");
+//          task.setDescription("Realização de testes");
+//          task.setNotes("Sem notas");
+//          task.setIsComplete(false);
+//          task.setDeadLine(new Date());
+//          
+//          taskController.save(task);
+//          
+//          task.setName("Novo Novo");
+//          taskController.update(task);
+//          List<Task> tasks = taskController.getAll(2);
     }
 }
