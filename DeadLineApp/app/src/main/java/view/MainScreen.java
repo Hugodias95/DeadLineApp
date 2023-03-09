@@ -8,9 +8,13 @@ import controller.ProjectController;
 import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import model.Project;
+import model.Task;
+import util.TaskTableModel;
 
 /**
  *
@@ -28,7 +32,8 @@ public class MainScreen extends javax.swing.JFrame {
     //Modelo do componente visual que faz a construção da parte visual
     //Model do componente gráfico
     //Irá guardar as informações (projects) que o método loadProjects() irá trazer
-    DefaultListModel<Project> projectModel;
+    DefaultListModel projectsModel;
+    TaskTableModel taskModel;
     
     public MainScreen() {
         initComponents();
@@ -128,19 +133,20 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelTopo.setLayout(jPanelTopoLayout);
         jPanelTopoLayout.setHorizontalGroup(
             jPanelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTopoLayout.createSequentialGroup()
+            .addGroup(jPanelTopoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelDeadLineApp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTopoLayout.createSequentialGroup()
                         .addComponent(jLabelAnote, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)))
-                .addGap(14, 14, 14))
+                        .addGap(36, 36, 36))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTopoLayout.createSequentialGroup()
+                        .addComponent(jLabelDeadLineApp, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanelTopoLayout.setVerticalGroup(
             jPanelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopoLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(35, 35, 35)
                 .addComponent(jLabelDeadLineApp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelAnote)
@@ -169,7 +175,7 @@ public class MainScreen extends javax.swing.JFrame {
             .addGroup(jPanelFundoProjetoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelProjetos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelProjetosAddIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -223,6 +229,7 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelFundoListaItem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jListProjetos.setBackground(java.awt.Color.white);
+        jListProjetos.setBorder(null);
         jListProjetos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jListProjetos.setForeground(new java.awt.Color(51, 51, 51));
         jListProjetos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -234,17 +241,13 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelFundoListaItem.setLayout(jPanelFundoListaItemLayout);
         jPanelFundoListaItemLayout.setHorizontalGroup(
             jPanelFundoListaItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoListaItemLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPaneProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPaneProjetos, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
         );
         jPanelFundoListaItemLayout.setVerticalGroup(
             jPanelFundoListaItemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoListaItemLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPaneProjetos)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoListaItemLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPaneProjetos, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanelFundoTarefaSelecionada.setBackground(java.awt.Color.white);
@@ -284,6 +287,8 @@ public class MainScreen extends javax.swing.JFrame {
         jTableListaTarefas.setRowMargin(1);
         jTableListaTarefas.setRowSelectionAllowed(false);
         jTableListaTarefas.setSelectionBackground(new java.awt.Color(153, 153, 153));
+        jTableListaTarefas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTableListaTarefas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableListaTarefas.setShowHorizontalLines(true);
         jScrollPaneTarefas.setViewportView(jTableListaTarefas);
 
@@ -292,15 +297,13 @@ public class MainScreen extends javax.swing.JFrame {
         jPanelFundoTarefaSelecionadaLayout.setHorizontalGroup(
             jPanelFundoTarefaSelecionadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFundoTarefaSelecionadaLayout.createSequentialGroup()
-                .addComponent(jScrollPaneTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPaneTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelFundoTarefaSelecionadaLayout.setVerticalGroup(
             jPanelFundoTarefaSelecionadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelFundoTarefaSelecionadaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPaneTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPaneTarefas)
         );
 
         javax.swing.GroupLayout JPanelFundoGeralLayout = new javax.swing.GroupLayout(JPanelFundoGeral);
@@ -309,15 +312,17 @@ public class MainScreen extends javax.swing.JFrame {
             JPanelFundoGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPanelFundoGeralLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(JPanelFundoGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelFundoProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelFundoListaItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(JPanelFundoGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelFundoTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelFundoTarefaSelecionada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelFundoListaItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelFundoProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(JPanelFundoGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JPanelFundoGeralLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanelFundoTarefaSelecionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelFundoTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jPanelTopo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         JPanelFundoGeralLayout.setVerticalGroup(
             JPanelFundoGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,6 +359,14 @@ public class MainScreen extends javax.swing.JFrame {
         
         ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled);
         projectDialogScreen.setVisible(true);
+        
+        projectDialogScreen.addWindowListener(new WindowAdapter() {
+            
+            public void windowClosed(WindowEvent e ) {
+                loadProjects();
+            }
+            
+        });
     }//GEN-LAST:event_jLabelProjetosAddIconMouseClicked
 
     private void jLabelTarefasAddIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTarefasAddIconMouseClicked
@@ -361,6 +374,14 @@ public class MainScreen extends javax.swing.JFrame {
         TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled);
         //taskDialogScreen.setProject(null);
         taskDialogScreen.setVisible(true);
+        
+//        taskDialogScreen.addWindowListener(new WindowAdapter() {
+//            
+//            public void windowClosed(WindowEvent e) {
+//                loadTasks(PROPERTIES);
+//            }
+//        });
+//        
         
     }//GEN-LAST:event_jLabelTarefasAddIconMouseClicked
 
@@ -434,22 +455,31 @@ public class MainScreen extends javax.swing.JFrame {
     }
     
     public void initComponentsModel() {
-        projectModel = new DefaultListModel<Project>();
+        projectsModel = new DefaultListModel();
         loadProjects();
+        
+        taskModel = new TaskTableModel();
+        jTableListaTarefas.setModel(taskModel);
+        loadTasks(18);
+    }
+    
+    public void loadTasks(int idProject) {
+       List<Task> tasks = taskController.getAll(idProject);
+       taskModel.setTasks(tasks);
     }
     
     public void loadProjects() {
         List<Project> projects = projectController.getAll();
         
         //Limpa a estrutura que guarda os projetos
-        projectModel.clear();
+        projectsModel.clear();
         
-        for (int i = 0; i < projects.size() -1; i++) {
+        for (int i = 0; i < projects.size(); i++) {
             Project project = projects.get(i);
-            projectModel.addElement(project);
+            projectsModel.addElement(project);
         }
         
-        jListProjetos.setModel(projectModel);
+        jListProjetos.setModel(projectsModel);
     }
     
 }
