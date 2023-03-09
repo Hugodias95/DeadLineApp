@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -86,26 +86,25 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabelProjeto" min="-2" pref="299" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPan" min="-2" pref="37" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="jLabelTarefa" min="-2" pref="299" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="jLabelIconSaveTarefa" min="-2" pref="37" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPan" max="32767" attributes="0"/>
+                  <Component id="jLabelTarefa" alignment="1" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabelIconSaveTarefa" pref="60" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jLabelProjeto" alignment="1" min="-2" pref="60" max="-2" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelProjeto">
+            <Component class="javax.swing.JLabel" name="jLabelTarefa">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -116,13 +115,16 @@
                 <Property name="text" type="java.lang.String" value="   Tarefa"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jScrollPan">
+            <Component class="javax.swing.JLabel" name="jLabelIconSaveTarefa">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/icons/check/check (5).png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelIconSaveTarefaMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -140,13 +142,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="1" pref="358" max="32767" attributes="0"/>
-                          <Component id="jLabelNomeProjeto" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextFieldNomeProjeto" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabelDescricaoProjeto" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabelNomeTarefa" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextFieldNomeTarefa" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabelDescricaoTarefa" alignment="0" max="32767" attributes="0"/>
                           <Component id="jScrollPane2" alignment="1" pref="358" max="32767" attributes="0"/>
-                          <Component id="jLabelPrazoProjeto" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextFieldPrazoProjeto" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jLabelNotasProjeto" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabelPrazoTarefa" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabelNotasTarefa" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jFormattedTextFieldPrazoTarefa" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -156,19 +158,19 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelNomeProjeto" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNomeTarefa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldNomeProjeto" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldNomeTarefa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelDescricaoProjeto" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelDescricaoTarefa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="156" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jLabelPrazoProjeto" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelPrazoTarefa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextFieldPrazoTarefa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldPrazoProjeto" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelNotasProjeto" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelNotasTarefa" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane2" min="-2" pref="115" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -177,7 +179,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabelNomeProjeto">
+            <Component class="javax.swing.JLabel" name="jLabelNomeTarefa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -191,7 +193,7 @@
                 <Property name="text" type="java.lang.String" value="Nome"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldNomeProjeto">
+            <Component class="javax.swing.JTextField" name="jTextFieldNomeTarefa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -204,7 +206,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelDescricaoProjeto">
+            <Component class="javax.swing.JLabel" name="jLabelDescricaoTarefa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -225,7 +227,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextAreaDescricaoProjeto">
+                <Component class="javax.swing.JTextArea" name="jTextAreaDescricaoTarefa">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -242,7 +244,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="jLabelPrazoProjeto">
+            <Component class="javax.swing.JLabel" name="jLabelPrazoTarefa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -256,20 +258,7 @@
                 <Property name="text" type="java.lang.String" value="Prazo"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextFieldPrazoProjeto">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="14" style="1"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="0" red="0" type="rgb"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabelNotasProjeto">
+            <Component class="javax.swing.JLabel" name="jLabelNotasTarefa">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -290,7 +279,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextAreaNotasProjeto">
+                <Component class="javax.swing.JTextArea" name="jTextAreaNotasTarefa">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -307,6 +296,16 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldPrazoTarefa">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
+                </Property>
+                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
+                  <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

@@ -4,6 +4,14 @@
  */
 package view;
 
+import controller.TaskController;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import model.Project;
+import model.Task;
+
 /**
  *
  * @author Avell
@@ -13,10 +21,19 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     /**
      * Creates new form ProjectDialogScreen
      */
+    //Controlador para ser utilizado na tela inteira
+    TaskController controller;
+    //Criado para conseguir atribuir a chave estrangeira, ou seja, o projeto é o dono da tarefa
+    //Cria o set no final
+    Project project;
+
     public TaskDialogScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+
+        //Cria o objeto de controlador no construtor
+        controller = new TaskController();
     }
 
     /**
@@ -31,19 +48,19 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jPanelFundoGeral = new javax.swing.JPanel();
         jPanelTopo = new javax.swing.JPanel();
-        jLabelProjeto = new javax.swing.JLabel();
-        jScrollPan = new javax.swing.JLabel();
+        jLabelTarefa = new javax.swing.JLabel();
+        jLabelIconSaveTarefa = new javax.swing.JLabel();
         jPanelFundoCampos = new javax.swing.JPanel();
-        jLabelNomeProjeto = new javax.swing.JLabel();
-        jTextFieldNomeProjeto = new javax.swing.JTextField();
-        jLabelDescricaoProjeto = new javax.swing.JLabel();
+        jLabelNomeTarefa = new javax.swing.JLabel();
+        jTextFieldNomeTarefa = new javax.swing.JTextField();
+        jLabelDescricaoTarefa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextAreaDescricaoProjeto = new javax.swing.JTextArea();
-        jLabelPrazoProjeto = new javax.swing.JLabel();
-        jTextFieldPrazoProjeto = new javax.swing.JTextField();
-        jLabelNotasProjeto = new javax.swing.JLabel();
+        jTextAreaDescricaoTarefa = new javax.swing.JTextArea();
+        jLabelPrazoTarefa = new javax.swing.JLabel();
+        jLabelNotasTarefa = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextAreaNotasProjeto = new javax.swing.JTextArea();
+        jTextAreaNotasTarefa = new javax.swing.JTextArea();
+        jFormattedTextFieldPrazoTarefa = new javax.swing.JFormattedTextField();
 
         jLabel3.setText("jLabel3");
 
@@ -55,12 +72,17 @@ public class TaskDialogScreen extends javax.swing.JDialog {
 
         jPanelTopo.setBackground(new java.awt.Color(0, 153, 102));
 
-        jLabelProjeto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelProjeto.setForeground(java.awt.Color.white);
-        jLabelProjeto.setText("   Tarefa");
+        jLabelTarefa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTarefa.setForeground(java.awt.Color.white);
+        jLabelTarefa.setText("   Tarefa");
 
-        jScrollPan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jScrollPan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check/check (5).png"))); // NOI18N
+        jLabelIconSaveTarefa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIconSaveTarefa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check/check (5).png"))); // NOI18N
+        jLabelIconSaveTarefa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelIconSaveTarefaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTopoLayout = new javax.swing.GroupLayout(jPanelTopo);
         jPanelTopo.setLayout(jPanelTopoLayout);
@@ -68,63 +90,61 @@ public class TaskDialogScreen extends javax.swing.JDialog {
             jPanelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPan, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addComponent(jLabelTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabelIconSaveTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanelTopoLayout.setVerticalGroup(
             jPanelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTopoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelTarefa, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTopoLayout.createSequentialGroup()
+                .addComponent(jLabelIconSaveTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jLabelProjeto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanelFundoCampos.setBackground(java.awt.Color.white);
 
-        jLabelNomeProjeto.setBackground(java.awt.Color.white);
-        jLabelNomeProjeto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabelNomeProjeto.setForeground(new java.awt.Color(0, 153, 102));
-        jLabelNomeProjeto.setText("Nome");
+        jLabelNomeTarefa.setBackground(java.awt.Color.white);
+        jLabelNomeTarefa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelNomeTarefa.setForeground(new java.awt.Color(0, 153, 102));
+        jLabelNomeTarefa.setText("Nome");
 
-        jTextFieldNomeProjeto.setBackground(java.awt.Color.white);
-        jTextFieldNomeProjeto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextFieldNomeProjeto.setForeground(new java.awt.Color(0, 0, 0));
+        jTextFieldNomeTarefa.setBackground(java.awt.Color.white);
+        jTextFieldNomeTarefa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextFieldNomeTarefa.setForeground(new java.awt.Color(0, 0, 0));
 
-        jLabelDescricaoProjeto.setBackground(java.awt.Color.white);
-        jLabelDescricaoProjeto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelDescricaoProjeto.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelDescricaoProjeto.setText("Descrição");
+        jLabelDescricaoTarefa.setBackground(java.awt.Color.white);
+        jLabelDescricaoTarefa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelDescricaoTarefa.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelDescricaoTarefa.setText("Descrição");
 
-        jTextAreaDescricaoProjeto.setBackground(java.awt.Color.white);
-        jTextAreaDescricaoProjeto.setColumns(20);
-        jTextAreaDescricaoProjeto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextAreaDescricaoProjeto.setForeground(new java.awt.Color(0, 0, 0));
-        jTextAreaDescricaoProjeto.setRows(5);
-        jScrollPane1.setViewportView(jTextAreaDescricaoProjeto);
+        jTextAreaDescricaoTarefa.setBackground(java.awt.Color.white);
+        jTextAreaDescricaoTarefa.setColumns(20);
+        jTextAreaDescricaoTarefa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextAreaDescricaoTarefa.setForeground(new java.awt.Color(0, 0, 0));
+        jTextAreaDescricaoTarefa.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaDescricaoTarefa);
 
-        jLabelPrazoProjeto.setBackground(java.awt.Color.white);
-        jLabelPrazoProjeto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabelPrazoProjeto.setForeground(new java.awt.Color(0, 153, 102));
-        jLabelPrazoProjeto.setText("Prazo");
+        jLabelPrazoTarefa.setBackground(java.awt.Color.white);
+        jLabelPrazoTarefa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabelPrazoTarefa.setForeground(new java.awt.Color(0, 153, 102));
+        jLabelPrazoTarefa.setText("Prazo");
 
-        jTextFieldPrazoProjeto.setBackground(java.awt.Color.white);
-        jTextFieldPrazoProjeto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextFieldPrazoProjeto.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelNotasTarefa.setBackground(java.awt.Color.white);
+        jLabelNotasTarefa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelNotasTarefa.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelNotasTarefa.setText("Notas");
 
-        jLabelNotasProjeto.setBackground(java.awt.Color.white);
-        jLabelNotasProjeto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelNotasProjeto.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelNotasProjeto.setText("Notas");
+        jTextAreaNotasTarefa.setBackground(java.awt.Color.white);
+        jTextAreaNotasTarefa.setColumns(20);
+        jTextAreaNotasTarefa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jTextAreaNotasTarefa.setForeground(new java.awt.Color(0, 0, 0));
+        jTextAreaNotasTarefa.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaNotasTarefa);
 
-        jTextAreaNotasProjeto.setBackground(java.awt.Color.white);
-        jTextAreaNotasProjeto.setColumns(20);
-        jTextAreaNotasProjeto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextAreaNotasProjeto.setForeground(new java.awt.Color(0, 0, 0));
-        jTextAreaNotasProjeto.setRows(5);
-        jScrollPane2.setViewportView(jTextAreaNotasProjeto);
+        jFormattedTextFieldPrazoTarefa.setBackground(java.awt.Color.white);
+        jFormattedTextFieldPrazoTarefa.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         javax.swing.GroupLayout jPanelFundoCamposLayout = new javax.swing.GroupLayout(jPanelFundoCampos);
         jPanelFundoCampos.setLayout(jPanelFundoCamposLayout);
@@ -134,32 +154,32 @@ public class TaskDialogScreen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelFundoCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                    .addComponent(jLabelNomeProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldNomeProjeto)
-                    .addComponent(jLabelDescricaoProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNomeTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNomeTarefa)
+                    .addComponent(jLabelDescricaoTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
-                    .addComponent(jLabelPrazoProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldPrazoProjeto)
-                    .addComponent(jLabelNotasProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelPrazoTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelNotasTarefa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextFieldPrazoTarefa))
                 .addContainerGap())
         );
         jPanelFundoCamposLayout.setVerticalGroup(
             jPanelFundoCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFundoCamposLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelNomeProjeto)
+                .addComponent(jLabelNomeTarefa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldNomeProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldNomeTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDescricaoProjeto)
+                .addComponent(jLabelDescricaoTarefa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabelPrazoProjeto)
+                .addComponent(jLabelPrazoTarefa)
+                .addGap(10, 10, 10)
+                .addComponent(jFormattedTextFieldPrazoTarefa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldPrazoProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelNotasProjeto)
+                .addComponent(jLabelNotasTarefa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -198,6 +218,38 @@ public class TaskDialogScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelIconSaveTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIconSaveTarefaMouseClicked
+
+        try {
+            Task task = new Task();
+            task.setIdProject(18);
+            
+            //Cria a formatação para converter String em data
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            //Cria um objeto do tipo Date para receber essa String formatada
+            Date deadline = null;
+            //Atribui ao objeto do tipo Date a string formatada
+            deadline = sdf.parse(jFormattedTextFieldPrazoTarefa.getText());
+            //Seta essa data no Deadline(prazo) do projeot
+            task.setDeadLine(deadline);
+
+            task.setName(jTextFieldNomeTarefa.getText());
+            task.setDescription(jTextAreaDescricaoTarefa.getText());
+
+            task.setNotes(jTextAreaNotasTarefa.getText());
+            task.setIsComplete(false);
+
+            controller.save(task);
+            JOptionPane.showMessageDialog(rootPane, "Tarefa salva com sucesso");
+
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
+
+        this.dispose();
+
+    }//GEN-LAST:event_jLabelIconSaveTarefaMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -209,7 +261,7 @@ public class TaskDialogScreen extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -242,21 +294,29 @@ public class TaskDialogScreen extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFormattedTextField jFormattedTextFieldPrazoTarefa;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabelDescricaoProjeto;
-    private javax.swing.JLabel jLabelNomeProjeto;
-    private javax.swing.JLabel jLabelNotasProjeto;
-    private javax.swing.JLabel jLabelPrazoProjeto;
-    private javax.swing.JLabel jLabelProjeto;
+    private javax.swing.JLabel jLabelDescricaoTarefa;
+    private javax.swing.JLabel jLabelIconSaveTarefa;
+    private javax.swing.JLabel jLabelNomeTarefa;
+    private javax.swing.JLabel jLabelNotasTarefa;
+    private javax.swing.JLabel jLabelPrazoTarefa;
+    private javax.swing.JLabel jLabelTarefa;
     private javax.swing.JPanel jPanelFundoCampos;
     private javax.swing.JPanel jPanelFundoGeral;
     private javax.swing.JPanel jPanelTopo;
-    private javax.swing.JLabel jScrollPan;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextAreaDescricaoProjeto;
-    private javax.swing.JTextArea jTextAreaNotasProjeto;
-    private javax.swing.JTextField jTextFieldNomeProjeto;
-    private javax.swing.JTextField jTextFieldPrazoProjeto;
+    private javax.swing.JTextArea jTextAreaDescricaoTarefa;
+    private javax.swing.JTextArea jTextAreaNotasTarefa;
+    private javax.swing.JTextField jTextFieldNomeTarefa;
     // End of variables declaration//GEN-END:variables
+
+    //Para referenciar ao projeto
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    
+    
 }

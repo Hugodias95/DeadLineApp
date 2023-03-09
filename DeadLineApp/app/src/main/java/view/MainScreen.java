@@ -4,8 +4,13 @@
  */
 package view;
 
+import controller.ProjectController;
+import controller.TaskController;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import model.Project;
 
 /**
  *
@@ -16,10 +21,23 @@ public class MainScreen extends javax.swing.JFrame {
     /**
      * Creates new form MainScreen
      */
+    
+    ProjectController projectController;
+    TaskController taskController;
+    
+    //Modelo do componente visual que faz a construção da parte visual
+    //Model do componente gráfico
+    //Irá guardar as informações (projects) que o método loadProjects() irá trazer
+    DefaultListModel<Project> projectModel;
+    
     public MainScreen() {
         initComponents();
         setLocationRelativeTo(null);
         decorateTableTask();
+        //Chama o método que instanciou os dois controllers
+        initDataController();
+        //Chama o método que instanciou o projectModel e dá o load nos projects
+        initComponentsModel();
     }
 
     /**
@@ -138,6 +156,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabelProjetosAddIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelProjetosAddIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add/add (5).png"))); // NOI18N
+        jLabelProjetosAddIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelProjetosAddIconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelFundoProjetoLayout = new javax.swing.GroupLayout(jPanelFundoProjeto);
         jPanelFundoProjeto.setLayout(jPanelFundoProjetoLayout);
@@ -169,6 +192,11 @@ public class MainScreen extends javax.swing.JFrame {
 
         jLabelTarefasAddIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTarefasAddIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add/add (5).png"))); // NOI18N
+        jLabelTarefasAddIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelTarefasAddIconMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelFundoTarefaLayout = new javax.swing.GroupLayout(jPanelFundoTarefa);
         jPanelFundoTarefa.setLayout(jPanelFundoTarefaLayout);
@@ -197,11 +225,6 @@ public class MainScreen extends javax.swing.JFrame {
         jListProjetos.setBackground(java.awt.Color.white);
         jListProjetos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jListProjetos.setForeground(new java.awt.Color(51, 51, 51));
-        jListProjetos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jListProjetos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListProjetos.setFixedCellHeight(40);
         jListProjetos.setSelectionBackground(new java.awt.Color(0, 153, 102));
@@ -327,6 +350,20 @@ public class MainScreen extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelProjetosAddIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProjetosAddIconMouseClicked
+        
+        ProjectDialogScreen projectDialogScreen = new ProjectDialogScreen(this, rootPaneCheckingEnabled);
+        projectDialogScreen.setVisible(true);
+    }//GEN-LAST:event_jLabelProjetosAddIconMouseClicked
+
+    private void jLabelTarefasAddIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelTarefasAddIconMouseClicked
+        
+        TaskDialogScreen taskDialogScreen = new TaskDialogScreen(this, rootPaneCheckingEnabled);
+        //taskDialogScreen.setProject(null);
+        taskDialogScreen.setVisible(true);
+        
+    }//GEN-LAST:event_jLabelTarefasAddIconMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -391,5 +428,28 @@ public class MainScreen extends javax.swing.JFrame {
         jTableListaTarefas.setAutoCreateRowSorter(true);        
     }
     
+    public void initDataController() {
+        projectController = new ProjectController();
+        taskController = new TaskController();
+    }
+    
+    public void initComponentsModel() {
+        projectModel = new DefaultListModel<Project>();
+        loadProjects();
+    }
+    
+    public void loadProjects() {
+        List<Project> projects = projectController.getAll();
+        
+        //Limpa a estrutura que guarda os projetos
+        projectModel.clear();
+        
+        for (int i = 0; i < projects.size() -1; i++) {
+            Project project = projects.get(i);
+            projectModel.addElement(project);
+        }
+        
+        jListProjetos.setModel(projectModel);
+    }
     
 }

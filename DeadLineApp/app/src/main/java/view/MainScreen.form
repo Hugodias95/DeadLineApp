@@ -273,6 +273,9 @@
                   <Image iconType="3" name="/icons/add/add (5).png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelProjetosAddIconMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -332,6 +335,9 @@
                   <Image iconType="3" name="/icons/add/add (5).png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelTarefasAddIconMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -387,13 +393,7 @@
                       <Color blue="33" green="33" red="33" type="rgb"/>
                     </Property>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="5">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                        <StringItem index="4" value="Item 5"/>
-                      </StringArray>
+                      <StringArray count="0"/>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
                     <Property name="fixedCellHeight" type="int" value="40"/>

@@ -4,6 +4,10 @@
  */
 package view;
 
+import controller.ProjectController;
+import javax.swing.JOptionPane;
+import model.Project;
+
 /**
  *
  * @author Avell
@@ -13,10 +17,16 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
     /**
      * Creates new form ProjectDialogScreen
      */
+    //Controlador para ser utilizado na tela inteira
+    ProjectController controller;
+
     public ProjectDialogScreen(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+
+        //Cria o objeto de controlador no construtor
+        controller = new ProjectController();
     }
 
     /**
@@ -32,7 +42,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         jPanelFundoGeral = new javax.swing.JPanel();
         jPanelTopo = new javax.swing.JPanel();
         jLabelProjeto = new javax.swing.JLabel();
-        jLabelIconeProjeto = new javax.swing.JLabel();
+        jLabelSaveProjeto = new javax.swing.JLabel();
         jPanelFundoCampos = new javax.swing.JPanel();
         jLabelNomeProjeto = new javax.swing.JLabel();
         jTextFieldNomeProjeto = new javax.swing.JTextField();
@@ -54,8 +64,13 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         jLabelProjeto.setForeground(java.awt.Color.white);
         jLabelProjeto.setText("   Projeto");
 
-        jLabelIconeProjeto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIconeProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check/check (5).png"))); // NOI18N
+        jLabelSaveProjeto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSaveProjeto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/check/check (5).png"))); // NOI18N
+        jLabelSaveProjeto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelSaveProjetoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTopoLayout = new javax.swing.GroupLayout(jPanelTopo);
         jPanelTopo.setLayout(jPanelTopoLayout);
@@ -64,15 +79,15 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
             .addGroup(jPanelTopoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelIconeProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(32, 32, 32)
+                .addComponent(jLabelSaveProjeto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
         jPanelTopoLayout.setVerticalGroup(
             jPanelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTopoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelIconeProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addComponent(jLabelSaveProjeto, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jLabelProjeto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -135,7 +150,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanelFundoCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanelTopo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanelTopo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 382, Short.MAX_VALUE)
         );
         jPanelFundoGeralLayout.setVerticalGroup(
             jPanelFundoGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,6 +175,25 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabelSaveProjetoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSaveProjetoMouseClicked
+
+        try {
+            Project project = new Project();
+
+            project.setName(jTextFieldNomeProjeto.getText());
+            project.setDescription(jTextAreaDescricaoProjeto.getText());
+
+            controller.save(project);
+
+            JOptionPane.showMessageDialog(rootPane, "Projeto salvo com sucesso");
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
+
+        this.dispose();
+
+    }//GEN-LAST:event_jLabelSaveProjetoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -171,7 +205,7 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Java swing".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -205,9 +239,9 @@ public class ProjectDialogScreen extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelDescricaoProjeto;
-    private javax.swing.JLabel jLabelIconeProjeto;
     private javax.swing.JLabel jLabelNomeProjeto;
     private javax.swing.JLabel jLabelProjeto;
+    private javax.swing.JLabel jLabelSaveProjeto;
     private javax.swing.JPanel jPanelFundoCampos;
     private javax.swing.JPanel jPanelFundoGeral;
     private javax.swing.JPanel jPanelTopo;
